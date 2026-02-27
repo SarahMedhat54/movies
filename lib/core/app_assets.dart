@@ -1,5 +1,5 @@
 abstract class AppAssets {
-  static const String splashLogo = "assets/images/logo_splash.png";
+  static const String logo = "assets/images/logo.png" ;
   static const String splashText = "assets/images/supervised_by_mohamed_nabil.png";
   static const String route = "assets/images/route.png" ;
   static const String forgotPassword = "assets/images/forgot_password.png";
@@ -9,6 +9,12 @@ abstract class AppAssets {
   static const String onboarding4 ="assets/images/onboarding4.png";
   static const String onboarding5 ="assets/images/onboarding5.png";
   static const String onboarding6 = "assets/images/onboarding6.png" ;
+  static const String iconGoogle = "assets/images/🦆 icon _google_.svg" ;
+  static const String eg = "assets/images/EG.png" ;
+  static const String lr = "assets/images/LR.png" ;
+
+
+
 
 }
 
