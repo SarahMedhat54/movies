@@ -21,18 +21,14 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-
       create: (context) => MoviesCubit()..fetchMovies(),
       child: Scaffold(
         backgroundColor: AppColors.black,
         body: BlocBuilder<MoviesCubit, MoviesState>(
           builder: (context, state) {
             if (state is MoviesLoading) {
-              return const Center(
-                child: CircularProgressIndicator(color: AppColors.yellow),
-              );
+              return const Center(child: CircularProgressIndicator(color: AppColors.yellow));
             } else if (state is MoviesSuccess) {
-
               if (_selectedMovieImage.isEmpty && state.movies.isNotEmpty) {
                 _selectedMovieImage = state.movies[0].largeCoverImage;
               }
@@ -42,62 +38,115 @@ class _HomeScreenState extends State<HomeScreen> {
 
                   _buildBlurredBackground(),
 
-                  SafeArea(
-                    child: Column(
-                      children: [
-                        const SizedBox(height: 20),
+                  CustomScrollView(
+                    physics: const BouncingScrollPhysics(),
+                    slivers: [
+                      SliverToBoxAdapter(
+                        child: SafeArea(
+                          child: Column(
+                            children: [
+                              const SizedBox(height: 20),
+                              Image.asset(AppAssets.AvailableNow, height: 30),
+                              const SizedBox(height: 15),
 
 
-                        Image.asset(
-                          AppAssets.AvailableNow,
-                          height: 35,
-                          fit: BoxFit.contain,
+                              carousel.CarouselSlider.builder(
+                                itemCount: state.movies.length,
+                                itemBuilder: (context, index, realIndex) {
+                                  return MovieCard(movie: state.movies[index]);
+                                },
+                                options: carousel.CarouselOptions(
+                                  height: MediaQuery.of(context).size.height * 0.43,
+                                  enlargeCenterPage: true,
+                                  viewportFraction: 0.62,
+                                  onPageChanged: (index, reason) {
+                                    setState(() {
+                                      _selectedMovieImage = state.movies[index].largeCoverImage;
+                                    });
+                                  },
+                                ),
+                              ),
+
+                              const SizedBox(height: 15),
+                              Image.asset(AppAssets.WatchNow, width: 200),
+                              const SizedBox(height: 10),
+                            ],
+                          ),
                         ),
+                      ),
 
-                        const Spacer(),
+                      SliverToBoxAdapter(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const Text("Action", style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold)),
+                              Text("See More >", style: TextStyle(color: AppColors.yellow, fontSize: 12)),
+                            ],
+                          ),
+                        ),
+                      ),
 
+                      SliverPadding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        sliver: SliverGrid(
+                          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 3,
+                            mainAxisSpacing: 10,
+                            crossAxisSpacing: 10,
+                            childAspectRatio: 0.65,
+                          ),
+                          delegate: SliverChildBuilderDelegate(
+                                (context, index) {
+                              final movie = state.movies[index];
+                              return ClipRRect(
+                                borderRadius: BorderRadius.circular(12),
+                                child: Stack(
+                                  children: [
+                                    Image.network(
+                                        movie.largeCoverImage,
+                                        fit: BoxFit.cover,
+                                        width: double.infinity,
+                                        height: double.infinity
+                                    ),
 
-                        carousel.CarouselSlider.builder(
-                          itemCount: state.movies.length,
-                          itemBuilder: (context, index, realIndex) {
-                            return MovieCard(movie: state.movies[index]);
-                          },
-                          options: carousel.CarouselOptions(
-                            height: MediaQuery.of(context).size.height * 0.55,
-                            enlargeCenterPage: true,
-                            viewportFraction: 0.7,
-                            onPageChanged: (index, reason) {
-                              setState(() {
-
-                                _selectedMovieImage = state.movies[index].largeCoverImage;
-                              });
+                                    Positioned(
+                                      top: 8,
+                                      left: 8,
+                                      child: Container(
+                                        padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
+                                        decoration: BoxDecoration(
+                                          color: Colors.black.withValues(alpha: 0.7),
+                                          borderRadius: BorderRadius.circular(6),
+                                        ),
+                                        child: Row(
+                                          children: [
+                                            const Icon(Icons.star, color: AppColors.yellow, size: 12),
+                                            const SizedBox(width: 3),
+                                            Text(
+                                              movie.rating.toString(),
+                                              style: const TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.bold),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              );
                             },
+                            childCount: state.movies.length,
                           ),
                         ),
+                      ),
 
-                        const SizedBox(height: 20),
-
-                        const Text(
-                          "Watch Now",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 18,
-                            fontWeight: FontWeight.w400,
-                          ),
-                        ),
-
-                        const Spacer(),
-                      ],
-                    ),
+                      const SliverToBoxAdapter(
+                        child: SizedBox(height: 120),
+                      ),
+                    ],
                   ),
                 ],
-              );
-            } else if (state is MoviesError) {
-              return Center(
-                child: Text(
-                  state.message,
-                  style: const TextStyle(color: Colors.white),
-                ),
               );
             }
             return const SizedBox();
@@ -122,22 +171,19 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
         child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
-          child: Container(
-            color: Colors.black.withOpacity(0.5),
-          ),
+          filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
+          child: Container(color: Colors.black.withValues(alpha: 0.6)),
         ),
       ),
     );
   }
 
-
   Widget _buildBottomNav() {
     return BottomNavigationBar(
       currentIndex: _currentIndex,
-      backgroundColor: AppColors.lightBlack,
+      backgroundColor: AppColors.lightBlack.withValues(alpha: 0.9),
       selectedItemColor: AppColors.yellow,
-      unselectedItemColor: AppColors.white,
+      unselectedItemColor: Colors.white,
       type: BottomNavigationBarType.fixed,
       onTap: (index) => setState(() => _currentIndex = index),
       items: const [
