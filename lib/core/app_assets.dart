@@ -9,6 +9,8 @@ abstract class AppAssets {
   static const String onboarding4 ="assets/images/onboarding4.png";
   static const String onboarding5 ="assets/images/onboarding5.png";
   static const String onboarding6 = "assets/images/onboarding6.png" ;
+  static const String AvailableNow = "assets/images/AvailableNow.png" ;
+
 
 }
 
