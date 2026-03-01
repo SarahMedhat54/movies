@@ -51,13 +51,13 @@ class _LoginScreenState extends State<LoginScreen> {
                SizedBox(height: 30),
               CustomTextField(
                 hintText: AppString.email,
-                prefixIcon: Icons.email_rounded,
+                prefixIcon:AppAssets.email,
                 controller: emailController,
               ),
                SizedBox(height: 12),
               CustomTextField(
                 hintText: AppString.password,
-                prefixIcon: Icons.lock,
+                prefixIcon: AppAssets.lock,
                 controller: passwordController,
                 isPassword: isObscure,
                 suffixIcon: IconButton(

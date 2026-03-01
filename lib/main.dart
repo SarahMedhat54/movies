@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:move/screens/login/login_screen.dart';
 import 'package:move/screens/onboarding/onboarding_screen.dart';
+import 'package:move/screens/register/register_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,7 +25,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: LoginScreen(),
+     home : RegisterScreen(),
+     // home: LoginScreen(),
 
       //home: OnboardingScreen(),
 

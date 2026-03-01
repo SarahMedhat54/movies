@@ -23,6 +23,18 @@ abstract final class AppString {
   static const String  or = " OR ";
   static const String  loginWithGoogle = "Login With Google";
   static const defaultErrorMessage = "Something went wrong please try again later";
+  static const String  register = " Register ";
+  static const String  avatar = " Avatar ";
+  static const String  name = " Name ";
+  static const String  phone = " Phone Number ";
+  static const String  confirmPassword = " Confirm Password ";
+  static const String  createAccount = " Create Account ";
+
+
+
+
+
+
 
 
 
