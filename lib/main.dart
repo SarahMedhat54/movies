@@ -1,7 +1,18 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:move/screens/login/login_screen.dart';
 import 'package:move/screens/onboarding/onboarding_screen.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: FirebaseOptions(
+      apiKey: "AIzaSyCQkLzW6M2re82kVF55lzJbIH0SMVCj1k4",
+      appId: "1:450728628496:android:4cdc5bfb5a8a7ad10d9595",
+      messagingSenderId: "",
+      projectId: "movies-cb885",
+    ),
+  );
   runApp(const MyApp());
 }
 
@@ -13,9 +24,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-     home: OnboardingScreen(),
+      home: LoginScreen(),
 
-     // home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      //home: OnboardingScreen(),
+
+      // home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
