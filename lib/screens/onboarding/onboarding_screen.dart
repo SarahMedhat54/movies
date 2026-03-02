@@ -4,7 +4,9 @@ import 'package:move/core/app_string.dart';
 import 'package:move/core/app_style.dart';
 import 'package:move/data/onboarding_data.dart';
 import 'package:move/widget/custom_button.dart';
-import 'package:move/screens/home/home_screen.dart'; // تأكد أن هذا المسار صحيح لديك
+import 'package:move/screens/home/home_screen.dart';
+
+import '../main_Screen.dart'; // تأكد أن هذا المسار صحيح لديك
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
@@ -102,7 +104,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                               Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => const HomeScreen(),
+                                  builder: (context) => const MainScreen(),
                                 ),
                               );
                             }

@@ -5,6 +5,7 @@ import 'package:carousel_slider/carousel_slider.dart' as carousel;
 import '../../cubit/movies/movies_cubit.dart';
 import '../../core/app_colors.dart';
 import '../../core/app_assets.dart';
+import '../../widget/custome_bottomBar.dart';
 import '../../widget/movie_cerd.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -15,7 +16,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int _currentIndex = 0;
+  //int _currentIndex = 0;
   String _selectedMovieImage = "";
 
   @override
@@ -152,7 +153,8 @@ class _HomeScreenState extends State<HomeScreen> {
             return const SizedBox();
           },
         ),
-        bottomNavigationBar: _buildBottomNav(),
+       // bottomNavigationBar: _buildBottomNav(),
+
       ),
     );
   }
@@ -178,20 +180,20 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildBottomNav() {
-    return BottomNavigationBar(
-      currentIndex: _currentIndex,
-      backgroundColor: AppColors.lightBlack.withValues(alpha: 0.9),
-      selectedItemColor: AppColors.yellow,
-      unselectedItemColor: Colors.white,
-      type: BottomNavigationBarType.fixed,
-      onTap: (index) => setState(() => _currentIndex = index),
-      items: const [
-        BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
-        BottomNavigationBarItem(icon: Icon(Icons.search), label: "Search"),
-        BottomNavigationBarItem(icon: Icon(Icons.explore), label: "Explore"),
-        BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profile"),
-      ],
-    );
-  }
+  // Widget _buildBottomNav() {
+  //   return BottomNavigationBar(
+  //     currentIndex: _currentIndex,
+  //     backgroundColor: AppColors.lightBlack.withValues(alpha: 0.9),
+  //     selectedItemColor: AppColors.yellow,
+  //     unselectedItemColor: Colors.white,
+  //     type: BottomNavigationBarType.fixed,
+  //     onTap: (index) => setState(() => _currentIndex = index),
+  //     items: const [
+  //       BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
+  //       BottomNavigationBarItem(icon: Icon(Icons.search), label: "Search"),
+  //       BottomNavigationBarItem(icon: Icon(Icons.explore), label: "Explore"),
+  //       BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profile"),
+  //     ],
+  //   );
+  // }
 }

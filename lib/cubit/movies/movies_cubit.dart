@@ -18,7 +18,8 @@ class MoviesError extends MoviesState {
 
 class MoviesCubit extends Cubit<MoviesState> {
   MoviesCubit() : super(MoviesInitial());
-
+  List<MovieModel> allMovies = [];
+  String selectedGenre = "All";
   Future<void> fetchMovies() async {
     emit(MoviesLoading());
     try {
@@ -35,5 +36,33 @@ class MoviesCubit extends Cubit<MoviesState> {
     } catch (e) {
       emit(MoviesError(e.toString()));
     }
+  }
+  ///  Get unique genres
+  List<String> getGenres() {
+    final genres = allMovies
+        .expand((movie) => movie.genres)
+        .toSet()
+        .map((e) => e.toString())
+        .toList();
+
+    genres.insert(0, "All");
+    return genres;
+  }
+
+  ///  Get filtered movies
+  List<MovieModel> getFilteredMovies() {
+    if (selectedGenre == "All") {
+      return allMovies;
+    }
+
+    return allMovies
+        .where((movie) => movie.genres.contains(selectedGenre))
+        .toList();
+  }
+
+  /// Change selected genre
+  void changeGenre(String genre) {
+    selectedGenre = genre;
+    emit(MoviesSuccess(allMovies)); // refresh UI
   }
 }
