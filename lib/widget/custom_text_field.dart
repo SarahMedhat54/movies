@@ -4,9 +4,8 @@ import 'package:move/core/app_style.dart';
 
 class CustomTextField extends StatelessWidget {
   final String hintText;
-
-  final IconData prefixIcon;
-
+  // 1. غيرنا النوع هنا لـ String عشان ياخد مسار الصورة
+  final String prefixIcon;
   final Widget? suffixIcon;
   final bool isPassword;
   final TextEditingController? controller;
@@ -31,15 +30,30 @@ class CustomTextField extends StatelessWidget {
         hintStyle: AppTextStyle.white12normal,
         filled: true,
         fillColor: AppColors.lightBlack,
-        prefixIcon: Icon(prefixIcon, color:  AppColors.white, size: 20,),
-        suffixIcon: suffixIcon ,
+        prefixIcon: Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: Image.asset(
+            prefixIcon,
+            height: 20,
+            width: 20,
+            color: AppColors.white,
+          ),
+        ),
+        suffixIcon: suffixIcon,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16),
           borderSide: BorderSide.none,
         ),
-        contentPadding: const EdgeInsets.symmetric(vertical: 18),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(16),
+          borderSide: BorderSide.none,
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(16),
+          borderSide: const BorderSide(color: AppColors.yellow, width: 1),
+        ),
+        contentPadding: const EdgeInsets.symmetric(vertical: 16),
       ),
-
-    ) ;
+    );
   }
 }
