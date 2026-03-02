@@ -24,6 +24,7 @@ abstract class AppAssets {
   static const String lock= "assets/images/lock.png" ;
   static const String name= "assets/images/name.png" ;
   static const String phone= "assets/images/phone.png" ;
+  static const String forgetPassword= "assets/images/forgot password.png" ;
 
 
 
