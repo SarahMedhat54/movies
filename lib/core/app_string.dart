@@ -29,6 +29,7 @@ abstract final class AppString {
   static const String  phone = " Phone Number ";
   static const String  confirmPassword = " Confirm Password ";
   static const String  createAccount = " Create Account ";
+  static const String  verifyEmail = "Verify Email";
 
 
 
