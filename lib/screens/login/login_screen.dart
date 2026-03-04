@@ -1,4 +1,4 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import  'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -7,8 +7,11 @@ import 'package:move/core/app_colors.dart';
 import 'package:move/core/app_string.dart';
 import 'package:move/core/app_style.dart';
 import 'package:move/widget/custom_button.dart';
+import 'package:move/widget/custom_or_design.dart';
+import 'package:move/widget/custom_row.dart';
 import 'package:move/widget/custom_text_field.dart';
 import '../../core/app_dialogs.dart';
+import '../../core/app_route.dart';
 import '../../firebase/firebase_store.dart';
 import '../../model/user_data.dart';
 
@@ -76,9 +79,10 @@ class _LoginScreenState extends State<LoginScreen> {
               Align(
                 alignment: Alignment.centerRight,
                 child: TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(context, AppRoutes.forgetPassword);  },
                   child:  Text(
-                    AppString.forgetPassword,
+                    AppString.forgetPasswordQue,
                     style: AppTextStyle.yello12W400,
                   ),
                 ),
@@ -110,31 +114,21 @@ class _LoginScreenState extends State<LoginScreen> {
                   }
                 },
               ),
-
-              const SizedBox(height: 12),
+              SizedBox(height: 12),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const Text(AppString.haveAccount, style: AppTextStyle.white12normal),
                   GestureDetector(
                     onTap: () {
-                    },
+                      Navigator.pushReplacement(context, AppRoutes.register);                    },
                     child: const Text(AppString.createOne, style: AppTextStyle.yello12W400),
                   ),
                 ],
               ),
-              const SizedBox(height: 30),
-              Row(
-                children: [
-                  Expanded(child: Divider(color: AppColors.yellow)),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    child: Text(AppString.or, style: AppTextStyle.yello12W400),
-                  ),
-                  Expanded(child: Divider(color: AppColors.yellow)),
-                ],
-              ),
-              const SizedBox(height: 20),
+              SizedBox(height: 30),
+              CustomOrDesign(),
+              SizedBox(height: 20),
               CustomButton(
                 text: AppString.loginWithGoogle,
                 onPress: () async {
@@ -151,31 +145,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 icon: SvgPicture.asset(AppAssets.iconGoogle, height: 30),
               ),
               SizedBox(height: 30),
-              Container(
-                padding: const EdgeInsets.all(4),
-                decoration: BoxDecoration(
-                  color: AppColors.black,
-                  borderRadius: BorderRadius.circular(20),
-                  border: Border.all(color: AppColors.yellow, width: 1),
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.all(4),
-                      decoration: BoxDecoration(
-                        color: AppColors.lightBlack,
-                        borderRadius: BorderRadius.circular(20),
-                        border: Border.all(color: AppColors.yellow, width: 1),
-                      ),
-                      child: Image.asset(AppAssets.lr, height: 20, width: 20),
-                    ),
-                    const SizedBox(width: 10),
-                    Image.asset(AppAssets.eg, height: 20, width: 20),
-                    const SizedBox(width: 5),
-                  ],
-                ),
-              ),
+              CustomRow(),
             ],
           ),
         ),

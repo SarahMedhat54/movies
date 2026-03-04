@@ -26,11 +26,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-     home: ForgetPassword(),
+    // home: ForgetPassword(),
      //home : RegisterScreen(),
      // home: LoginScreen(),
 
-      //home: OnboardingScreen(),
+      home: OnboardingScreen(),
 
       // home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
