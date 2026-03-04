@@ -19,12 +19,6 @@ class _ForgetPasswordState extends State<ForgetPassword> {
   final emailController = TextEditingController();
 
   @override
-  void dispose() {
-    emailController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.black,
@@ -35,9 +29,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
         centerTitle: true,
         leading: IconButton(
           onPressed: () {
-            if (Navigator.canPop(context)) {
               Navigator.pop(context);
-            }
           },
           icon: Icon(Icons.arrow_back_ios_new, color: AppColors.yellow),
         ),
