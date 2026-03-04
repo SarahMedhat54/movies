@@ -14,9 +14,7 @@ class BrowseScreen extends StatefulWidget {
 }
 
 class _BrowseScreenState extends State<BrowseScreen> {
-
   String selectedGenre = "All";
-
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -25,23 +23,18 @@ class _BrowseScreenState extends State<BrowseScreen> {
         backgroundColor: AppColors.black,
         body: BlocBuilder<MoviesCubit, MoviesState>(
           builder: (context, state) {
-
             if (state is MoviesLoading) {
               return const Center(
                 child: CircularProgressIndicator(color: AppColors.yellow),
               );
             }
             if (state is MoviesSuccess) {
-              /// 1️⃣ Extract unique genres
               final genresList = state.movies
                   .expand((movie) => movie.genres)
                   .toSet()
                   .map((e) => e.toString())
                   .toList();
-
               genresList.insert(0, "All");
-
-              /// 2️⃣ Filter movies
               List<MovieModel> filteredMovies;
 
               if (selectedGenre == "All") {
@@ -51,16 +44,12 @@ class _BrowseScreenState extends State<BrowseScreen> {
                     .where((movie) => movie.genres.contains(selectedGenre))
                     .toList();
               }
-
               return SafeArea(
                 child: Container(
                   color: AppColors.black,
                   child: Column(
                     children: [
-
                       const SizedBox(height: 20),
-
-                      /// 3️⃣ Genre Tabs
                       SizedBox(
                         height: 50,
                         child: ListView.builder(
@@ -106,7 +95,6 @@ class _BrowseScreenState extends State<BrowseScreen> {
                       ),
 
                       const SizedBox(height: 15),
-
                       CustomMovieCard(numCard: 2,filteredMovies: filteredMovies,),
                     ],
                   ),
