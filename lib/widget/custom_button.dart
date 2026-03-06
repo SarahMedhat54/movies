@@ -12,6 +12,7 @@ class CustomButton extends StatelessWidget {
   final BorderSide? border;
 
   final VoidCallback onPress;
+  final Widget ? icon ;
 
   const CustomButton({
     super.key,
@@ -19,7 +20,7 @@ class CustomButton extends StatelessWidget {
     required this.onPress,
     this.backgroundColor,
     this.textStyle,
-    this.border,
+    this.border, this.icon,
   });
 
   @override
@@ -32,7 +33,13 @@ class CustomButton extends StatelessWidget {
         elevation: 0,
       ),
       onPressed: onPress,
-      child: Text(text, style: textStyle??AppTextStyle.black14W600),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          if (icon != null) ...[icon!, const SizedBox(width: 10)],
+          Text(text, style: textStyle??AppTextStyle.black14W600),
+        ],
+      ),
     );
   }
 }

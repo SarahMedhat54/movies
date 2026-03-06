@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:move/core/app_colors.dart';
+import 'package:move/core/app_route.dart';
 import 'package:move/core/app_string.dart';
 import 'package:move/core/app_style.dart';
 import 'package:move/data/onboarding_data.dart';
@@ -97,6 +98,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                 curve: Curves.easeInOut,
                               );
                             }
+<<<<<<< home_screen_task
 
                             else {
                               Navigator.pushReplacement(
@@ -106,6 +108,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                 ),
                               );
                             }
+=======
+                            else
+                              {
+                                Navigator.pushReplacement(context, AppRoutes.login);
+                              }
+>>>>>>> main
                           },
                         ),
                       ),

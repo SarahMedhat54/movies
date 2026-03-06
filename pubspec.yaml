@@ -39,6 +39,17 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
   flutter_native_splash: ^2.4.7
+  flutter_svg: ^2.2.3
+  firebase_auth: ^6.1.4
+  firebase_core: ^4.4.0
+  cloud_firestore: ^6.1.2
+  google_sign_in: ^6.2.1
+  carousel_slider: ^5.1.2
+
+
+
+
+
 
 dev_dependencies:
   flutter_test:
@@ -93,11 +104,11 @@ flutter:
   # see https://flutter.dev/to/font-from-package
 flutter_native_splash:
   color: "#121312"
-  image: assets/images/logo_splash.png
+  image: assets/images/logo.png
   fullscreen: true
   android_12:
     color: "#121312"
-    image: assets/images/logo_splash.png
+    image: assets/images/logo.png
 
 
 
