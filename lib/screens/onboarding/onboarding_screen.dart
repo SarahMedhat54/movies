@@ -5,6 +5,7 @@ import 'package:move/core/app_string.dart';
 import 'package:move/core/app_style.dart';
 import 'package:move/data/onboarding_data.dart';
 import 'package:move/widget/custom_button.dart';
+import 'package:move/screens/home/home_screen.dart'; // تأكد أن هذا المسار صحيح لديك
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
@@ -12,6 +13,7 @@ class OnboardingScreen extends StatefulWidget {
   @override
   State<OnboardingScreen> createState() => _OnboardingScreenState();
 }
+
 class _OnboardingScreenState extends State<OnboardingScreen> {
   final PageController controller = PageController();
   int currentInt = 0;
@@ -41,7 +43,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
                 colors: [
-                  //Colors.transparent,
                   AppColors.black.withOpacity(0.2),
                   AppColors.black.withOpacity(0.4),
                   AppColors.black.withOpacity(0.8),
@@ -56,8 +57,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             left: 0,
             right: 0,
             child: AnimatedContainer(
-              duration:  Duration(milliseconds: 300),
-              padding:  EdgeInsets.symmetric(horizontal: 18, vertical: 20),
+              duration: const Duration(milliseconds: 300),
+              padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 20),
               decoration: BoxDecoration(
                 color: currentInt == 0 ? Colors.transparent : AppColors.black,
                 borderRadius: const BorderRadius.only(
@@ -73,28 +74,46 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     textAlign: TextAlign.center,
                     style: AppTextStyle.white18W500,
                   ),
-                   SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   Text(
                     onboardingData[currentInt].body,
                     style: AppTextStyle.white12normal,
+                    textAlign: TextAlign.center,
                   ),
-                   SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   Row(
                     children: [
                       Expanded(
                         child: CustomButton(
-                          text: currentInt == 0 ? AppString.exploreNow :(currentInt == onboardingData.length-1 ? AppString.finish :AppString.next ) ,
+                          text: currentInt == 0
+                              ? AppString.exploreNow
+                              : (currentInt == onboardingData.length - 1
+                              ? AppString.finish
+                              : AppString.next),
                           onPress: () {
+
                             if (currentInt < onboardingData.length - 1) {
                               controller.nextPage(
                                 duration: const Duration(milliseconds: 300),
                                 curve: Curves.easeInOut,
                               );
                             }
+<<<<<<< home_screen_task
+
+                            else {
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const HomeScreen(),
+                                ),
+                              );
+                            }
+=======
                             else
                               {
                                 Navigator.pushReplacement(context, AppRoutes.login);
                               }
+>>>>>>> main
                           },
                         ),
                       ),
