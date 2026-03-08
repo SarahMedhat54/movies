@@ -3,7 +3,9 @@ class MovieModel {
   final String title;
   final String year;
   final double rating;
-  final String largeCoverImage;
+  final int runtime;
+  final String summary;
+  final String image;
   final List<dynamic> genres;
 
   MovieModel({
@@ -11,7 +13,9 @@ class MovieModel {
     required this.title,
     required this.year,
     required this.rating,
-    required this.largeCoverImage,
+    required this.runtime,
+    required this.summary,
+    required this.image,
     required this.genres,
   });
 
@@ -21,7 +25,9 @@ class MovieModel {
       title: json['title'],
       year: json['year'].toString(),
       rating: (json['rating'] as num).toDouble(),
-      largeCoverImage: json['large_cover_image'],
+      runtime: json['runtime'] ?? 0,
+      summary: json['summary'] ?? "",
+      image: json['large_cover_image'] ?? "",
       genres: json['genres'] ?? [],
     );
   }
