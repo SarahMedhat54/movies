@@ -31,7 +31,7 @@ class CustomMovieCard extends StatelessWidget {
               ClipRRect(
                 borderRadius: BorderRadius.circular(12),
                 child: Image.network(
-                  movie.largeCoverImage,
+                  movie.image,
                   fit: BoxFit.cover,
                 ),
               ),

@@ -14,6 +14,41 @@ abstract final class AppString {
   static const String next = "Next";
   static const String back = "Back";
   static const String finish = "Finish";
+  static const String email = "Email";
+  static const String password = "Password";
+  static const String login = "Login";
+  static const String haveAccount = "Don’t Have Account ? ";
+  static const String  createOne = " Create One ?";
+  static const String  or = " OR ";
+  static const String  loginWithGoogle = "Login With Google";
+  static const defaultErrorMessage = "Something went wrong please try again later";
+  static const String  register = " Register ";
+  static const String  avatar = " Avatar ";
+  static const String  name = " Name ";
+  static const String  phone = " Phone Number ";
+  static const String  confirmPassword = " Confirm Password ";
+  static const String  createAccount = " Create Account ";
+  static const String  verifyEmail = "Verify Email";
+  static const String forgetPassword = "Forget Password";
+  static const String forgetPasswordQue = "Forget Password ?";
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

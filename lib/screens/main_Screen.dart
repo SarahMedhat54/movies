@@ -3,6 +3,7 @@ import 'package:move/screens/profile/profile_screen.dart';
 import '../widget/custome_bottomBar.dart';
 import 'home/home_screen.dart';
 import 'browse/browse_screen.dart';
+import 'home/search_screen.dart';
 
 class MainScreen extends StatefulWidget {
   static const String routeName = "main_screen";
@@ -19,7 +20,7 @@ class _MainScreenState extends State<MainScreen> {
 
   final List<Widget> tabs = const [
     HomeScreen(),
-    Placeholder(color: Colors.green),   // SearchScreen later
+    SearchScreen(),   // SearchScreen later
     BrowseScreen(),
     ProfileScreen()  , // ProfileScreen later
   ];

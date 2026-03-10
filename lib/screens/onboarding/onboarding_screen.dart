@@ -4,9 +4,13 @@ import 'package:move/core/app_string.dart';
 import 'package:move/core/app_style.dart';
 import 'package:move/data/onboarding_data.dart';
 import 'package:move/widget/custom_button.dart';
+
 import 'package:move/screens/home/home_screen.dart';
 
 import '../main_Screen.dart'; // تأكد أن هذا المسار صحيح لديك
+
+import 'package:move/screens/login/login_screen.dart';
+
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
@@ -92,19 +96,21 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                               ? AppString.finish
                               : AppString.next),
                           onPress: () {
-
                             if (currentInt < onboardingData.length - 1) {
                               controller.nextPage(
                                 duration: const Duration(milliseconds: 300),
                                 curve: Curves.easeInOut,
                               );
-                            }
+                            } else {
 
-                            else {
                               Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => const MainScreen(),
+
+                                //  builder: (context) => const MainScreen(),
+
+                                  builder: (context) => const LoginScreen(),
+
                                 ),
                               );
                             }
