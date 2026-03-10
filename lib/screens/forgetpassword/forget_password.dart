@@ -19,6 +19,12 @@ class _ForgetPasswordState extends State<ForgetPassword> {
   final emailController = TextEditingController();
 
   @override
+  void dispose() {
+    emailController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.black,

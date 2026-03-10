@@ -29,6 +29,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
   bool isObscurePassword = true;
   bool isObscureConfirm = true;
 
+  @override
+  void dispose() {
+    nameController.dispose();
+    emailController.dispose();
+    passwordController.dispose();
+    confirmPasswordController.dispose();
+    phoneController.dispose();
+    super.dispose();
+  }
+
   final List<String> avatars = [
    AppAssets.avatar1,
     AppAssets.avatar2 ,
@@ -55,30 +65,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              CarouselSlider(items:avatars.map((assetPath) {
-                return GestureDetector(
-                  onTap: () {
+              CarouselSlider(
+                items: avatars.map((assetPath) {
+                  return Image.asset(assetPath, fit: BoxFit.contain);
+                }).toList(),
+                options: CarouselOptions(
+                  height: 140,
+                  enlargeCenterPage: true,
+                  enableInfiniteScroll: false,
+                  viewportFraction: 0.35,
+                  onPageChanged: (index, reason) {
                     setState(() {
-                      selectedAvatar = assetPath;
+                      selectedAvatar = avatars[index];
                     });
                   },
-                  child: Image.asset(
-                    assetPath,
-                    fit: BoxFit.contain,
-                  ),
-                );
-              }).toList(),
-                options: CarouselOptions(
-                height: 140,
-                enlargeCenterPage: true,
-                enableInfiniteScroll: false,
-                viewportFraction: 0.35,
-                onPageChanged: (index, reason) {
-                  setState(() {
-                    selectedAvatar=avatars[index];
-                  });
-                },
-              ),
+                ),
               ),
               Text(AppString.avatar, style: AppTextStyle.white12normal,),
               SizedBox(height: 10,),
@@ -107,18 +108,23 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   showMessage(context, "Passwords do not match", title: "Error", posText: "ok");
                   return;
                 }
+                if (nameController.text.isEmpty || emailController.text.isEmpty) {
+                  showMessage(context, "Please fill all fields", title: "Error", posText: "ok");
+                  return;
+                }
+
                 try {
                   showLoading(context);
                   final credential = await FirebaseAuth.instance
                       .createUserWithEmailAndPassword(
-                    email: emailController.text,
+                    email: emailController.text.trim(),
                     password: passwordController.text,
                   );
                   UserData.currentUser = UserData(
                     id: credential.user!.uid,
                     name: nameController.text,
                     phoneNumber: phoneController.text,
-                    email: emailController.text,
+                    email: emailController.text.trim(),
                     avatar:selectedAvatar,
                   );
                   createUserInFirestore(UserData.currentUser!);
