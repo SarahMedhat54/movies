@@ -49,41 +49,6 @@ class MovieDetailsScreen extends StatelessWidget {
                     onPressed: () => Navigator.pop(context),
                   ),
                 ),
-                //التعديل
-
-                Positioned(
-                  top: 40,
-                  right: 20,
-                  child: StreamBuilder<DocumentSnapshot>(
-                    stream: FirebaseFirestore.instance
-                        .collection("users")
-                        .doc(UserData.currentUser?.id)
-                        .collection("wishlist")
-                        .doc(movie.id.toString())
-                        .snapshots(),
-                    builder: (context, snapshot) {
-                      bool isBookmarked = snapshot.hasData && snapshot.data!.exists;
-
-                      return Container(
-                        decoration: BoxDecoration(
-                          color: Colors.black45,
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: IconButton(
-                          icon: Icon(
-                            isBookmarked ? Icons.bookmark : Icons.bookmark_border,
-                            color: isBookmarked ? const Color(0xFFFFBB3B) : Colors.white,
-                            size: 30,
-                          ),
-                          onPressed: () {
-                            toggleWishlist(movie);
-                          },
-                        ),
-                      );
-                    },
-                  ),
-                ),
-
                 const Icon(Icons.play_circle_fill, color: Color(0xFFFFBB3B), size: 80),
 
                 Positioned(

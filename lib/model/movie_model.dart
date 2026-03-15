@@ -32,17 +32,4 @@ class MovieModel {
     );
   }
 
-  // ده التعديل
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'title': title,
-      'year': year,
-      'rating': rating,
-      'runtime': runtime,
-      'summary': summary,
-      'large_cover_image': image,
-      'genres': genres,
-    };
-  }
 }

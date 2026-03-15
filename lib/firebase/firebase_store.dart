@@ -20,28 +20,3 @@ Future<UserData> getUserFromFirestore(String uid) async {
   Map<String, dynamic> json = snapshot.data() as Map<String, dynamic>;
   return UserData.fromJson(json);
 }
-
-// ده التعديل
-
-Future<void> toggleWishlist(MovieModel movie) async {
-  String? uid = UserData.currentUser?.id;
-
-  if (uid == null) {
-    print("User is not logged in!");
-    return;
-  }
-  var docRef = FirebaseFirestore.instance
-      .collection("users")
-      .doc(uid)
-      .collection("wishlist")
-      .doc(movie.id.toString());
-  var doc = await docRef.get();
-
-  if (doc.exists) {
-    await docRef.delete();
-    print("Movie removed from wishlist");
-  } else {
-    await docRef.set(movie.toJson());
-    print("Movie added to wishlist");
-  }
-}
