@@ -92,16 +92,34 @@ class _LoginScreenState extends State<LoginScreen> {
               CustomButton(
                 text: AppString.login,
                 onPress: () async {
-                  // معدلاه عشان اتخطي الفيربيز موقتا
-                  // Navigator.pushReplacement(
-                  //   context,
-                  //   MaterialPageRoute(builder: (context) => const HomeScreen()),
-                  // );
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(builder: (context) => const MainScreen()),
-                  );
+                  try {
+                    UserCredential userCredential =
+                    await FirebaseAuth.instance.signInWithEmailAndPassword(
+                      email: emailController.text.trim(),
+                      password: passwordController.text.trim(),
+                    );
+
+                    print(userCredential.user?.uid);
+
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => const MainScreen()),
+                    );
+                  } on FirebaseAuthException catch (e) {
+                    print(e.message);
+                  }
                 },
+                // onPress: () async {
+                //   // معدلاه عشان اتخطي الفيربيز موقتا
+                //   // Navigator.pushReplacement(
+                //   //   context,
+                //   //   MaterialPageRoute(builder: (context) => const HomeScreen()),
+                //   // );
+                //   Navigator.pushReplacement(
+                //     context,
+                //     MaterialPageRoute(builder: (context) => const MainScreen()),
+                //   );
+                // },
               ),
               const SizedBox(height: 12),
               Row(

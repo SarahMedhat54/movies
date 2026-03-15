@@ -1,11 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:move/model/movie_model.dart';
+import 'package:move/screens/profile/history_manager.dart';
+
+import '../firebase/firebase_store.dart';
 
 
-class MovieDetailsScreen extends StatelessWidget {
+class MovieDetailsScreen extends StatefulWidget {
   final MovieModel movie;
   const MovieDetailsScreen({super.key, required this.movie});
 
+  @override
+  State<MovieDetailsScreen> createState() => _MovieDetailsScreenState();
+}
+
+class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
+  bool isBookmarked=false;
+  @override
+  void initState() {
+    super.initState();
+    loadBookmark();
+    HistoryManager.addMovie(widget.movie);
+  }
+  void loadBookmark() async {
+    bool exist = await isMovieBookmarked(widget.movie);
+
+    if (!mounted) return;
+
+    setState(() {
+      isBookmarked = exist;
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,7 +42,7 @@ class MovieDetailsScreen extends StatelessWidget {
               alignment: Alignment.center,
               children: [
                 Image.network(
-                  movie.image,
+                  widget.movie.image,
                   height: 600,
                   width: double.infinity,
                   fit: BoxFit.cover,
@@ -45,6 +69,34 @@ class MovieDetailsScreen extends StatelessWidget {
                     onPressed: () => Navigator.pop(context),
                   ),
                 ),
+                Positioned(
+                  top: 40,
+                  right: 20,
+                  child: IconButton(
+                    icon: Icon(
+                      isBookmarked
+                          ? Icons.bookmark
+                          : Icons.bookmark_border,
+                      color: Colors.white,
+                      size: 30,
+                    ),
+                    onPressed: () async {
+
+                      await toggleWatchList(widget.movie);
+
+                      setState(() {
+                        isBookmarked = !isBookmarked;
+                      });
+
+                      // ScaffoldMessenger.of(context).showSnackBar(
+                      //   const SnackBar(
+                      //     content: Text("Movie added to Watch List"),
+                      //   ),
+                      // );
+                    },
+                  ),
+                ),
+
                 const Icon(Icons.play_circle_fill, color: Color(0xFFFFBB3B), size: 80),
 
                 Positioned(
@@ -52,7 +104,7 @@ class MovieDetailsScreen extends StatelessWidget {
                   child: Column(
                     children: [
                       Text(
-                        movie.title,
+                        widget.movie.title,
                         textAlign: TextAlign.center,
                         style: const TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.bold),
                       ),
@@ -79,9 +131,9 @@ class MovieDetailsScreen extends StatelessWidget {
                         children: [
                           _buildStatItem(Icons.favorite, "15", const Color(0xFFFFBB3B)),
                           const SizedBox(width: 20),
-                          _buildStatItem(Icons.access_time, "${movie.runtime}", const Color(0xFFFFBB3B)),
+                          _buildStatItem(Icons.access_time, "${widget.movie.runtime}", const Color(0xFFFFBB3B)),
                           const SizedBox(width: 20),
-                          _buildStatItem(Icons.star, "${movie.rating}", const Color(0xFFFFBB3B)),
+                          _buildStatItem(Icons.star, "${widget.movie.rating}", const Color(0xFFFFBB3B)),
                         ],
                       ),
                     ],
@@ -101,7 +153,7 @@ class MovieDetailsScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 10),
                   Text(
-                    movie.summary,
+                    widget.movie.summary,
                     style: const TextStyle(color: Color(0xFFCBC9C9), fontSize: 14, height: 1.5),
                   ),
                 ],

@@ -69,7 +69,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                     MaterialPageRoute(
                                       builder: (context) => MovieDetailsScreen(movie: movies[index]),
                                     ),
-                                  );
+                                  ).then((_) {
+                                    setState(() {});
+                                  });
                                 },
                                 child: MovieCard(movie: movies[index]),
                               );
