@@ -7,8 +7,8 @@ import 'home/search_screen.dart';
 
 class MainScreen extends StatefulWidget {
   static const String routeName = "main_screen";
-
-  const MainScreen({super.key});
+  final int initialIndex;
+  const MainScreen({super.key,this.initialIndex = 0});
 
   @override
   State<MainScreen> createState() => _MainScreenState();
@@ -16,7 +16,13 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
 
-  int selectedTabIndex = 0;
+  //int selectedTabIndex = 0;
+  late int selectedTabIndex;
+  @override
+  void initState() {
+    super.initState();
+    selectedTabIndex = widget.initialIndex;
+  }
 
   final List<Widget> tabs = const [
     HomeScreen(),

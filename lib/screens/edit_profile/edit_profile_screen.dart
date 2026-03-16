@@ -9,6 +9,7 @@ import 'package:move/widget/custom_button.dart';
 import '../../core/app_route.dart';
 import '../../firebase/firebase_store.dart';
 import '../../model/user_data.dart';
+import '../main_Screen.dart';
 
 class EditProfileScreen extends StatefulWidget {
   const EditProfileScreen({super.key});
@@ -182,7 +183,12 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(content: Text("Profile Updated")),
               );
-              Navigator.pushReplacement(context, AppRoutes.profile);
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => const MainScreen(initialIndex: 3),
+                ),
+              );
 
             },backgroundColor: AppColors.yellow,
               textStyle:AppTextStyle.black20W400 ,
