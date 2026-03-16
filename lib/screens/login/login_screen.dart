@@ -11,6 +11,7 @@ import 'package:move/widget/custom_or_design.dart';
 import 'package:move/widget/custom_row.dart';
 import 'package:move/widget/custom_text_field.dart';
 import 'package:move/screens/home/home_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../core/app_dialogs.dart';
 import '../../core/app_route.dart';
 
@@ -99,11 +100,16 @@ class _LoginScreenState extends State<LoginScreen> {
                     showMessage(context, "Please enter your email and password", title: "Required", posText: "OK");
                     return;
                   }
+                  //
+                  final SharedPreferences prefs = await SharedPreferences.getInstance();
+                  await prefs.setBool('isLoggedIn', true);
                   // معدلاه عشان اتخطي الفيربيز موقتا
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(builder: (context) => const HomeScreen()),
-                  );
+                  if (mounted) {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => const HomeScreen()),
+                    );
+                  }
                 },
               ),
               const SizedBox(height: 12),

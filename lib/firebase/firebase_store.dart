@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import '../model/movie_model.dart';
 import '../model/user_data.dart';
 
 Future<void> createUserInFirestore(UserData user) async {

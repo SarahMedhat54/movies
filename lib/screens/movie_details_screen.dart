@@ -1,5 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:move/model/movie_model.dart';
+
+import '../firebase/firebase_store.dart';
+import '../model/user_data.dart';
 
 
 class MovieDetailsScreen extends StatelessWidget {

@@ -12,6 +12,7 @@ import 'package:move/widget/custom_text_field.dart';
 import '../../core/app_dialogs.dart';
 import '../../firebase/firebase_store.dart';
 import '../../model/user_data.dart';
+import '../home/home_screen.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -128,8 +129,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     avatar:selectedAvatar,
                   );
                   createUserInFirestore(UserData.currentUser!);
-                  Navigator.pop(context); // hide loading
-                 // Navigator.push(context, AppRoutes.navigation);
+                  if (mounted) {
+                    Navigator.pop(context);
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(builder: (context) => const HomeScreen()),
+                          (route) => false,
+                    );
+                  }
                 } on FirebaseAuthException catch (e) {
                   Navigator.pop(context); // hide loading
                   var message = "";
