@@ -195,7 +195,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
                       if (movies.isEmpty) {
                         return Center(
-                          child: Image.asset(AppAssets.ZeroState),
+                          child: Image.asset(AppAssets.ZeroState,height: 150,),
                         );
                       }
 

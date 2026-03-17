@@ -11,6 +11,8 @@ import 'package:move/widget/custom_or_design.dart';
 import 'package:move/widget/custom_row.dart';
 import 'package:move/widget/custom_text_field.dart';
 import 'package:move/screens/home/home_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../../core/app_dialogs.dart';
 import '../../core/app_route.dart';
 import '../main_Screen.dart';
 
@@ -26,6 +28,13 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   bool isObscure = true;
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
 
   Future<UserCredential?> signInWithGoogle() async {
     final GoogleSignIn googleSignIn = GoogleSignIn();
@@ -64,11 +73,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 controller: passwordController,
                 isPassword: isObscure,
                 suffixIcon: IconButton(
-                  onPressed: () {
-                    setState(() {
-                      isObscure = !isObscure;
-                    });
-                  },
+                  onPressed: () => setState(() => isObscure = !isObscure),
                   icon: Icon(
                     isObscure ? Icons.visibility_off : Icons.visibility,
                     color: AppColors.white,
@@ -92,6 +97,7 @@ class _LoginScreenState extends State<LoginScreen> {
               CustomButton(
                 text: AppString.login,
                 onPress: () async {
+
                   try {
                     UserCredential userCredential =
                     await FirebaseAuth.instance.signInWithEmailAndPassword(
@@ -100,13 +106,29 @@ class _LoginScreenState extends State<LoginScreen> {
                     );
 
                     print(userCredential.user?.uid);
-
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('isLoggedIn', true);
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(builder: (context) => const MainScreen()),
                     );
                   } on FirebaseAuthException catch (e) {
                     print(e.message);
+// =======
+//                   if (emailController.text.isEmpty || passwordController.text.isEmpty) {
+//                     showMessage(context, "Please enter your email and password", title: "Required", posText: "OK");
+//                     return;
+//                   }
+//                   //
+//                   final SharedPreferences prefs = await SharedPreferences.getInstance();
+//                   await prefs.setBool('isLoggedIn', true);
+//                   // معدلاه عشان اتخطي الفيربيز موقتا
+//                   if (mounted) {
+//                     Navigator.pushReplacement(
+//                       context,
+//                       MaterialPageRoute(builder: (context) => const HomeScreen()),
+//                     );
+// >>>>>>> main
                   }
                 },
                 // onPress: () async {
@@ -128,7 +150,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   const Text(AppString.haveAccount, style: AppTextStyle.white12normal),
                   GestureDetector(
                     onTap: () {
-                      Navigator.pushReplacement(context, AppRoutes.register);
+                      Navigator.push(context, AppRoutes.register);
                     },
                     child: const Text(AppString.createOne, style: AppTextStyle.yello12W400),
                   ),
@@ -140,14 +162,34 @@ class _LoginScreenState extends State<LoginScreen> {
               CustomButton(
                 text: AppString.loginWithGoogle,
                 onPress: () async {
-                  // Navigator.pushReplacement(
-                  //   context,
-                  //   MaterialPageRoute(builder: (context) => const HomeScreen()),
-                  // );
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(builder: (context) => const MainScreen()),
-                  );
+// <<<<<<< HEAD
+//                   // Navigator.pushReplacement(
+//                   //   context,
+//                   //   MaterialPageRoute(builder: (context) => const HomeScreen()),
+//                   // );
+//                   Navigator.pushReplacement(
+//                     context,
+//                     MaterialPageRoute(builder: (context) => const MainScreen()),
+//                   );
+// =======
+                  try {
+                    showLoading(context);
+                    final user = await signInWithGoogle();
+
+                    if (mounted) Navigator.pop(context);
+                    if (user != null) {
+                      if (mounted) {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(builder: (context) => const MainScreen()),
+                        );
+                      }
+                    }
+                  } catch (e) {
+                    if (mounted) Navigator.pop(context);
+                    showMessage(context, "Google Sign-In failed. Please try again.", title: "Error", posText: "OK");
+                  }
+
                 },
                 icon: SvgPicture.asset(AppAssets.iconGoogle, height: 30),
               ),

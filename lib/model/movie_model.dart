@@ -31,4 +31,5 @@ class MovieModel {
       genres: json['genres'] ?? [],
     );
   }
+
 }
