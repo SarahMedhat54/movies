@@ -11,6 +11,8 @@ class MovieCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String proxyUrl = 'https://external-content.duckduckgo.com/iu/?u=${movie.image}';
+
     return GestureDetector(
       onTap: () {
         Navigator.push(
@@ -21,13 +23,13 @@ class MovieCard extends StatelessWidget {
         );
       },
       child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 10),
+        margin: const EdgeInsets.symmetric(horizontal: 8),
         child: Stack(
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(16),
               child: CachedNetworkImage(
-                imageUrl: movie.image,
+                imageUrl: proxyUrl  ,
                 fit: BoxFit.cover,
                 width: double.infinity,
                 height: double.infinity,

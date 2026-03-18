@@ -31,5 +31,29 @@ class MovieModel {
       genres: json['genres'] ?? [],
     );
   }
+  factory MovieModel.fromFirestore(Map<String, dynamic> json) {
+    return MovieModel(
+      id: json['movieId'] ?? 0,
+      title: json['title'] ?? "",
+      year: json['year']?.toString() ?? "",
+      rating: (json['rating'] ?? 0.0).toDouble(),
+      runtime: json['runtime'] ?? 0,
+      summary: json['summary'] ?? "",
+      image: json['image'] ?? "",
+      genres: json['genres'] ?? [],
+    );
+  }
 
+  Map<String, dynamic> toFirestore() {
+    return {
+      "movieId": id,
+      "title": title,
+      "image": image,
+      "rating": rating,
+      "runtime": runtime,
+      "year": year,
+      "summary": summary,
+      "genres": genres,
+    };
+  }
 }

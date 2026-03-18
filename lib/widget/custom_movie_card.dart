@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:move/widget/movie_cerd.dart';
 
 import '../core/app_colors.dart';
 import '../core/app_style.dart';
@@ -26,38 +27,7 @@ class CustomMovieCard extends StatelessWidget {
         itemBuilder: (context, index) {
           final movie = filteredMovies[index];
 
-          return Stack(
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(12),
-                child: Image.network(
-                  movie.image,
-                  fit: BoxFit.cover,
-                ),
-              ),
-              Positioned(
-                top: 8,
-                left: 8,
-                child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
-                  decoration: BoxDecoration(
-                    color: Colors.black.withValues(alpha: 0.6),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Row(
-                    children: [
-                      Text(
-                          movie.rating.toString(),
-                          style: AppTextStyle.white16w400
-                      ),
-                      const SizedBox(width: 3),
-                      const Icon(Icons.star, color: AppColors.yellow, size: 12),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          );
+          return MovieCard(movie: movie);
         },
       ),
     );

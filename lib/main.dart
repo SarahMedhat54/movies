@@ -3,9 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:move/cubit/movies/movies_cubit.dart';
 import 'package:move/screens/onboarding/onboarding_screen.dart';
+import 'package:move/core/cache_helper.dart';
+import 'package:move/screens/login/login_screen.dart';
+import 'package:move/screens/main_Screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await CacheHelper.init();
   await Firebase.initializeApp(
     options: const FirebaseOptions(
       apiKey: "AIzaSyCQkLzW6M2re82kVF55lzJbIH0SMVCj1k4",
@@ -24,9 +28,13 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => MoviesCubit()..fetchMovies(),
-      child: const MaterialApp(
+      child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: OnboardingScreen(),
+        home: CacheHelper.isLoggedIn()
+            ? const MainScreen()
+            : (CacheHelper.isSkippedOnboarding()
+                  ? const LoginScreen()
+                  : const OnboardingScreen()),
       ),
     );
   }

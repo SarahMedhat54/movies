@@ -36,6 +36,8 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
   }
   @override
   Widget build(BuildContext context) {
+    String proxyUrl = 'https://external-content.duckduckgo.com/iu/?u=${widget.movie.image}';
+
     return Scaffold(
       backgroundColor: const Color(0xFF121312),
       body: SingleChildScrollView(
@@ -46,7 +48,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
               alignment: Alignment.center,
               children: [
                 Image.network(
-                  widget.movie.image,
+                  proxyUrl,
                   height: 600,
                   width: double.infinity,
                   fit: BoxFit.cover,
