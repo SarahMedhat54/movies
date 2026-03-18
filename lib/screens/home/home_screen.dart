@@ -5,6 +5,7 @@ import 'package:carousel_slider/carousel_slider.dart' as carousel;
 import '../../cubit/movies/movies_cubit.dart';
 import '../../core/app_colors.dart';
 import '../../core/app_assets.dart';
+import '../../widget/custome_bottomBar.dart';
 import '../../widget/movie_cerd.dart';
 import '../movie_details_screen.dart';
 import 'search_screen.dart';
@@ -28,7 +29,7 @@ class _HomeScreenState extends State<HomeScreen> {
       body: _currentIndex == 0
           ? _buildHomeContent()
           : (_currentIndex == 1 ? const SearchScreen() : const Center(child: Text("Coming Soon", style: TextStyle(color: Colors.white)))),
-      bottomNavigationBar: _buildBottomNav(),
+      //bottomNavigationBar: _buildBottomNav(),
     );
   }
 
@@ -41,7 +42,9 @@ class _HomeScreenState extends State<HomeScreen> {
           final movies = (state is MoviesSuccess) ? state.movies : (state as SearchSuccess).movies;
 
           if (_selectedMovieImage.isEmpty && movies.isNotEmpty) {
-            _selectedMovieImage = movies[0].image;
+            String proxyUrl = 'https://external-content.duckduckgo.com/iu/?u=${movies[0].image}';
+
+            _selectedMovieImage = proxyUrl;
           }
 
           return Stack(
@@ -68,7 +71,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                     MaterialPageRoute(
                                       builder: (context) => MovieDetailsScreen(movie: movies[index]),
                                     ),
-                                  );
+                                  ).then((_) {
+                                    setState(() {});
+                                  });
                                 },
                                 child: MovieCard(movie: movies[index]),
                               );
@@ -79,7 +84,8 @@ class _HomeScreenState extends State<HomeScreen> {
                               viewportFraction: 0.62,
                               onPageChanged: (index, reason) {
                                 setState(() {
-                                  _selectedMovieImage = movies[index].image;
+                                  String proxyUrl = 'https://external-content.duckduckgo.com/iu/?u=${movies[index].image}';
+                                  _selectedMovieImage = proxyUrl;
                                 });
                               },
                             ),
@@ -105,12 +111,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
 
                   SliverPadding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
                     sliver: SliverGrid(
                       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 3,
                         mainAxisSpacing: 10,
-                        crossAxisSpacing: 10,
                         childAspectRatio: 0.65,
                       ),
                       delegate: SliverChildBuilderDelegate(
@@ -127,29 +132,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             },
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(12),
-                              child: Stack(
-                                children: [
-                                  Image.network(movie.image, fit: BoxFit.cover, width: double.infinity, height: double.infinity),
-
-                                  Positioned(
-                                    top: 5,
-                                    left: 5,
-                                    child: Container(
-                                      padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
-                                      decoration: BoxDecoration(
-                                        color: Colors.black.withOpacity(0.7),
-                                        borderRadius: BorderRadius.circular(5),
-                                      ),
-                                      child: Row(
-                                        children: [
-                                          const Icon(Icons.star, color: AppColors.yellow, size: 10),
-                                          Text(" ${movie.rating}", style: const TextStyle(color: Colors.white, fontSize: 10)),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
+                              child: MovieCard(movie: movie)
                             ),
                           );
                         },
@@ -159,12 +142,14 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   const SliverToBoxAdapter(child: SizedBox(height: 100)),
                 ],
+
               ),
             ],
           );
         }
         return const Center(child: Text("No Movies Found", style: TextStyle(color: Colors.white)));
       },
+
     );
   }
 
@@ -189,20 +174,4 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildBottomNav() {
-    return BottomNavigationBar(
-      currentIndex: _currentIndex,
-      backgroundColor: AppColors.lightBlack.withOpacity(0.9),
-      selectedItemColor: AppColors.yellow,
-      unselectedItemColor: Colors.white,
-      type: BottomNavigationBarType.fixed,
-      onTap: (index) => setState(() => _currentIndex = index),
-      items: const [
-        BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
-        BottomNavigationBarItem(icon: Icon(Icons.search), label: "Search"),
-        BottomNavigationBarItem(icon: Icon(Icons.explore), label: "Explore"),
-        BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profile"),
-      ],
-    );
-  }
 }

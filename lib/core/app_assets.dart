@@ -13,6 +13,11 @@ abstract class AppAssets {
   static const String AvailableNow = "assets/images/AvailableNow.png" ;
   static const String WatchNow = "assets/images/WatchNow.png" ;
 
+  static const String ProfilePhoto = "assets/images/profilephoto.png" ;
+  static const String ZeroState = "assets/images/Empty.png" ;
+  static const String WatchList = "assets/images/list.png" ;
+
+
   static const String iconGoogle = "assets/images/🦆 icon _google_.svg" ;
   static const String eg = "assets/images/EG.png" ;
   static const String lr = "assets/images/LR.png" ;
@@ -29,7 +34,6 @@ abstract class AppAssets {
   static const String name= "assets/images/name.png" ;
   static const String phone= "assets/images/phone.png" ;
   static const String forgetPassword= "assets/images/forgot password.png" ;
-
 
 
 

@@ -13,6 +13,7 @@ import '../../core/app_dialogs.dart';
 import '../../firebase/firebase_store.dart';
 import '../../model/user_data.dart';
 import '../home/home_screen.dart';
+import '../main_Screen.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -133,7 +134,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     Navigator.pop(context);
                     Navigator.pushAndRemoveUntil(
                       context,
-                      MaterialPageRoute(builder: (context) => const HomeScreen()),
+                      MaterialPageRoute(builder: (context) => const MainScreen()),
                           (route) => false,
                     );
                   }

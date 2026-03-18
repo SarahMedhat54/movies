@@ -4,6 +4,11 @@ import 'package:move/core/app_string.dart';
 import 'package:move/core/app_style.dart';
 import 'package:move/data/onboarding_data.dart';
 import 'package:move/widget/custom_button.dart';
+
+import 'package:move/core/cache_helper.dart';
+
+import '../main_Screen.dart'; // تأكد أن هذا المسار صحيح لديك
+
 import 'package:move/screens/login/login_screen.dart';
 
 class OnboardingScreen extends StatefulWidget {
@@ -16,6 +21,30 @@ class OnboardingScreen extends StatefulWidget {
 class _OnboardingScreenState extends State<OnboardingScreen> {
   final PageController controller = PageController();
   int currentInt = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _checkLoginStatus();
+  }
+
+  Future<void> _checkLoginStatus() async {
+    if (CacheHelper.isLoggedIn()) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const MainScreen()),
+        );
+      });
+    } else if (CacheHelper.isSkippedOnboarding()) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const LoginScreen()),
+        );
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -87,8 +116,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           text: currentInt == 0
                               ? AppString.exploreNow
                               : (currentInt == onboardingData.length - 1
-                              ? AppString.finish
-                              : AppString.next),
+                                    ? AppString.finish
+                                    : AppString.next),
                           onPress: () {
                             if (currentInt < onboardingData.length - 1) {
                               controller.nextPage(
@@ -96,10 +125,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                 curve: Curves.easeInOut,
                               );
                             } else {
-
+                              CacheHelper.skipOnboarding();
                               Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
+                                  //  builder: (context) => const MainScreen(),
                                   builder: (context) => const LoginScreen(),
                                 ),
                               );
